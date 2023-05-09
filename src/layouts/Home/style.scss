@@ -1,0 +1,38 @@
+.Home {
+  color: #444c80;
+  .TitleBar {
+    margin-bottom: 20px;
+  }
+  section {
+    margin-bottom: 20px;
+  }
+  .sectionTitle {
+    font-weight: 900;
+    margin-bottom: 20px;
+  }
+
+  .announcement {
+    .ant-space-item {
+      flex: 1;
+    }
+
+    .ant-card {
+      height: 200px;
+      .ant-card-head {
+        border-bottom: 0px;
+        padding: 10px;
+        color: var(--head-text-color);
+      }
+
+      .ant-card-extra {
+        a {
+            color: #999;
+            font-size: 12px;
+        }
+      }
+      .ant-card-body {
+        padding: 10px;
+      }
+    }
+  }
+}
