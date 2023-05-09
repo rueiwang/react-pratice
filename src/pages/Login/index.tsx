@@ -21,7 +21,7 @@ const Login = () => {
       >
         <Form.Item
           name="username"
-          rules={[{ required: true, message: "Please input your Username!" }]}
+          rules={[{type: 'email', message: "帳號格式錯誤"},{ required: true, message: "請輸入帳號" }]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
@@ -30,7 +30,7 @@ const Login = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[{ required: true, message: "Please input your Password!" }]}
+          rules={[{pattern: /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/, message: "密碼格式錯誤"},{ required: true, message: "請輸入密碼" }]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
