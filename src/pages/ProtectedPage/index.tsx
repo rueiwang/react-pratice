@@ -1,18 +1,18 @@
 import { Layout, Menu, Button } from "antd";
 import { LogoutOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Outlet, Link, useLocation, Navigate } from "react-router-dom";
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 import "./style.scss";
 
-const ProtectedLayout = () => {
+const ProtectedPage = () => {
   const location = useLocation();
   if (location.pathname === "/") {
     return <Navigate to="/home"></Navigate>;
   }
 
   return (
-    <Layout className="ProtectedLayout">
+    <Layout className="ProtectedPage">
       <Header className="header">
         <h1 className="">綠電轉供資訊服務平台</h1>
         <Button
@@ -51,4 +51,4 @@ const ProtectedLayout = () => {
   );
 };
 
-export default ProtectedLayout;
+export default ProtectedPage;

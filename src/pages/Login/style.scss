@@ -1,6 +1,5 @@
 .Login {
 
-    --them-color: #22ac38ff;
     display: flex;
     flex: 1 0 auto;
     flex-direction: column;
@@ -8,7 +7,7 @@
     justify-content: center;
 
     &__title {
-        color: var(--them-color);
+        color: var(--primary-color);
         text-align: center;
         margin-bottom: 20px;
         h1 {
@@ -24,10 +23,10 @@
         margin-bottom: 20px;
     }
     .login-form-button {
-        background-color: var(--them-color);
+        background-color: var(--primary-color);
         width: 100%;
     }
     .site-form-item-icon {
-        color: var(--them-color);
+        color: var(--primary-color);
     }
 }
