@@ -1,0 +1,32 @@
+.Login {
+
+    --them-color: #22ac38ff;
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__title {
+        color: var(--them-color);
+        text-align: center;
+        margin-bottom: 20px;
+        h1 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        p {
+            color: #cfcfcf;
+        }
+    }
+    .ant-form-item {
+        margin-bottom: 15px;
+    }
+    .login-form-button {
+        background-color: var(--them-color);
+        width: 100%;
+    }
+    .site-form-item-icon {
+        color: var(--them-color);
+    }
+}
