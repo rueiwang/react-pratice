@@ -1,7 +1,19 @@
 .Home {
   color: #444c80;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+
   .TitleBar {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+
+  &__content {
+   height: calc(100% - 40px);
+    overflow: auto;
+    padding:10px 0 ;
   }
   section {
     margin-bottom: 20px;
@@ -12,12 +24,16 @@
   }
 
   .announcement {
+    .ant-space {
+      display: flex;
+    }
     .ant-space-item {
       flex: 1;
     }
 
     .ant-card {
       height: 200px;
+
       .ant-card-head {
         border-bottom: 0px;
         padding: 10px;
