@@ -1,18 +1,24 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from "react-router-dom";
+import AuthLayout from "@/layouts/AuthLayout";
+import ProtectedLayout from "@/layouts/ProtectedLayout";
+
 import Login from "@/pages/Login";
-import ProtectedPage from "@/pages/ProtectedPage";
-import Home from "@/layouts/Home";
-import Profile from "@/layouts/Profile";
+import Home from "@/pages/Home";
+import Profile from "@/pages/Profile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
-    <Route path="/login" element={<Login />} />
-    <Route path="/" element={<ProtectedPage />}>
-      <Route path="home" element={<Home />} />
-      <Route path="profile" element={<Profile />} />
+    <Route element={<AuthLayout />}>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<ProtectedLayout />}>
+        <Route path="home" element={<Home />} />
+        <Route path="profile" element={<Profile />} />
+      </Route>
     </Route>
-  </>
   )
 );
 

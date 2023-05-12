@@ -2,22 +2,35 @@ import { Layout, Menu, Button } from "antd";
 import { LogoutOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Outlet, Link, useLocation, Navigate } from "react-router-dom";
 const { Header, Content, Sider } = Layout;
+import { AuthContext } from "@/customHooks/useAuthContext";
 
 import "./style.scss";
+import { useContext } from "react";
 
-const ProtectedPage = () => {
-  const location = useLocation();
-  if (location.pathname === "/") {
-    return <Navigate to="/home"></Navigate>;
+const ProtectedLayout = () => {
+  const auth = useContext(AuthContext);
+  const { pathname } = useLocation();
+
+  if (auth === undefined) {
+    return <Navigate to="/login" />;
+  }
+  const { user, logout } = auth
+  if (user === null) {
+    return <Navigate to="/login" />;
+  }
+
+  if (pathname === "/") {
+    return <Navigate to="/home" />;
   }
 
   return (
-    <Layout className="ProtectedPage">
+    <Layout className="ProtectedLayout">
       <Header className="header">
         <h1 className="">綠電轉供資訊服務平台</h1>
         <Button
           type="text"
           icon={<LogoutOutlined style={{ color: "#444c80ff" }} />}
+          onClick={logout}
           className="logout-button"
         ></Button>
       </Header>
@@ -32,12 +45,20 @@ const ProtectedPage = () => {
                 {
                   key: "1",
                   icon: <HomeOutlined />,
-                  label: <Link to={"/home"}>首頁</Link>,
+                  label: (
+                    <Link to={"/home"} state={{ key: "1" }}>
+                      首頁
+                    </Link>
+                  ),
                 },
                 {
                   key: "2",
                   icon: <UserOutlined />,
-                  label: <Link to={"/profile"}>個人資訊</Link>,
+                  label: (
+                    <Link to={"/profile"} state={{ key: "2" }}>
+                      個人資訊
+                    </Link>
+                  ),
                 },
               ]}
             />
@@ -51,4 +72,4 @@ const ProtectedPage = () => {
   );
 };
 
-export default ProtectedPage;
+export default ProtectedLayout;
