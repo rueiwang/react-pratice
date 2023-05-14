@@ -9,6 +9,7 @@ import AuthLayout, { getUserData } from "@/layouts/AuthLayout";
 import ProtectedLayout from "@/layouts/ProtectedLayout";
 import Login from "@/pages/Login";
 import Home from "@/pages/Home";
+import { getChartData } from "@/pages/Home/fakeData";
 import Profile from "@/pages/Profile";
 
 const router = createBrowserRouter(
@@ -19,7 +20,7 @@ const router = createBrowserRouter(
     >
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<ProtectedLayout />}>
-        <Route path="home" element={<Home />} />
+        <Route path="home" element={<Home />} loader={() => defer({chartDataPromise: getChartData()})} />
         <Route path="profile" element={<Profile />} />
       </Route>
     </Route>

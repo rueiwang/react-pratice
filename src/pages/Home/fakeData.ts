@@ -1,4 +1,5 @@
 import { random } from "lodash";
+import { resolve } from "path";
 
 export interface ChartData {
   power: number;
@@ -40,4 +41,16 @@ export function makeFakeData(): ChartData[] {
   }
 
   return result;
+}
+
+export interface ChartDataLoader {
+  chartDataPromise: Promise<ChartData[]>;
+}
+
+export function getChartData () {
+  return new Promise<ChartData[]>((resolve) => {
+    return setTimeout(() => {
+      resolve(makeFakeData())
+    }, 1000)
+  })
 }

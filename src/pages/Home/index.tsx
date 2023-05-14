@@ -1,13 +1,17 @@
-import { makeFakeData } from "./fakeData";
+import { Suspense } from "react";
+import { useLoaderData, Await } from "react-router-dom";
+import { ChartDataLoader } from "@/pages/Home/fakeData";
 import Chart from "./Chart";
 
 import TitleBar from "@/components/Title";
 import { Card, Space } from "antd";
 import { HomeOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import "./style.scss";
+import Loading from "@/components/Loading";
 
 const Home = () => {
-  const chartData = makeFakeData();
+  // const chartData = makeFakeData();
+  const { chartDataPromise } = useLoaderData() as ChartDataLoader;
   return (
     <div className="Home">
       <TitleBar title="首頁" icon={<HomeOutlined />} />
@@ -46,7 +50,13 @@ const Home = () => {
         </section>
         <section className="highChart">
           <div className="sectionTitle">全案場轉供走勢圖</div>
-          <Chart data={chartData} />
+          <Suspense fallback={<Loading />}>
+            <Await
+              resolve={chartDataPromise}
+              errorElement={<>Wrong</>}
+              children={(chartData) => <Chart data={chartData} />}
+            ></Await>
+          </Suspense>
         </section>
       </div>
     </div>

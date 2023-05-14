@@ -2,7 +2,8 @@ import { Suspense } from "react";
 import { useLoaderData, useOutlet, Await } from "react-router-dom";
 import { AuthProvider, UserName } from "@/customHooks/useAuthContext";
 
-import { Spin, Alert } from "antd";
+import { Alert } from "antd";
+import Loading from "@/components/Loading";
 
 interface AuthLayoutLoader {
   userPromise: Promise<UserName>;
@@ -13,31 +14,11 @@ export const getUserData = () => {
     return setTimeout(() => {
       const user = window.localStorage.getItem("user") || null;
       resolve(user);
-    }, 300);
+    }, 100);
   });
 };
 
-const Loading = () => (
-  <div
-    style={{
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    }}
-  >
-    <Spin tip="Loading">
-      <div
-        className="content"
-        style={{
-          padding: "50px",
-          borderRadius: "4px",
-        }}
-      />
-    </Spin>
-  </div>
-);
+
 const AuthLayout = () => {
   const outlet = useOutlet();
   const { userPromise } = useLoaderData() as AuthLayoutLoader;
