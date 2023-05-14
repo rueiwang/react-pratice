@@ -35,25 +35,18 @@ const ProtectedLayout = () => {
             <Menu
               className="main__menu"
               mode="inline"
-              defaultSelectedKeys={["1"]}
+              defaultSelectedKeys={["/home"]}
+              selectedKeys={[pathname]}
               items={[
                 {
-                  key: "1",
+                  key: "/home",
                   icon: <HomeOutlined />,
-                  label: (
-                    <Link to={"/home"} state={{ key: "1" }}>
-                      首頁
-                    </Link>
-                  ),
+                  label: <Link to={"/home"}>首頁</Link>,
                 },
                 {
-                  key: "2",
+                  key: "/profile",
                   icon: <UserOutlined />,
-                  label: (
-                    <Link to={"/profile"} state={{ key: "2" }}>
-                      個人資訊
-                    </Link>
-                  ),
+                  label: <Link to={"/profile"}>個人資訊</Link>,
                 },
               ]}
             />
