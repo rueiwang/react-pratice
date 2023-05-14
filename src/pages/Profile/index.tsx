@@ -1,11 +1,12 @@
+import dataList, { DataType } from "./fakeData";
+import { useState } from "react";
+
 import TitleBar from "@/components/Title";
+
 import { UserOutlined } from "@ant-design/icons";
 import { Table, Switch, Popover } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import dataList, { DataType } from "./fakeData";
-
 import "./style.scss";
-import { useState } from "react";
 
 const Profile = () => {
   const [tableData, setTableData] = useState(dataList);

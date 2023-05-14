@@ -45,8 +45,6 @@ export const AuthProvider = ({
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-// ?? Fast refresh only works when a file only export components.
-// Use a new file to share constant or functions between components.
 export const useAuth = () => {
   return useContext(AuthContext);
 };

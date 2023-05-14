@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { useAuth, UserName } from "@/customHooks/useAuthContext";
 
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import "./style.scss";
 
 interface LoginValue {

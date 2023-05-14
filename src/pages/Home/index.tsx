@@ -1,8 +1,9 @@
-import TitleBar from "@/components/Title";
-import { HomeOutlined, DoubleRightOutlined } from "@ant-design/icons";
-import { Card, Space } from "antd";
 import { makeFakeData } from "./fakeData";
 import Chart from "./Chart";
+
+import TitleBar from "@/components/Title";
+import { Card, Space } from "antd";
+import { HomeOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import "./style.scss";
 
 const Home = () => {

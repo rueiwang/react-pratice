@@ -1,9 +1,9 @@
-import { Layout, Menu, Button } from "antd";
-import { LogoutOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Outlet, Link, useLocation, Navigate } from "react-router-dom";
-const { Header, Content, Sider } = Layout;
 import { useAuth } from "@/customHooks/useAuthContext";
 
+import { Layout, Menu, Button } from "antd";
+const { Header, Content, Sider } = Layout;
+import { LogoutOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import "./style.scss";
 
 const ProtectedLayout = () => {

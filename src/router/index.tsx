@@ -4,9 +4,9 @@ import {
   Route,
   defer,
 } from "react-router-dom";
+
 import AuthLayout, { getUserData } from "@/layouts/AuthLayout";
 import ProtectedLayout from "@/layouts/ProtectedLayout";
-
 import Login from "@/pages/Login";
 import Home from "@/pages/Home";
 import Profile from "@/pages/Profile";
