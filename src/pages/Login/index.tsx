@@ -1,12 +1,28 @@
+import { Navigate } from "react-router-dom";
+import { useAuth, UserName } from "@/customHooks/useAuthContext";
+
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import "./style.scss";
 
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
+interface LoginValue {
+  user: UserName;
+  password: string;
+}
+
 
 const Login = () => {
+  const { user, login } = useAuth();
+  if (user !== null) {
+    return <Navigate to="/home"  replace={true} />;
+  }
+
+  const startLogin = (value: LoginValue) => {
+    if(!login) return
+    login(value.user);
+    return <Navigate to="/home" />;
+  };
+
   return (
     <div className="Login">
       <div className="Login__title">
@@ -17,11 +33,14 @@ const Login = () => {
         name="normal_login"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={onFinish}
+        onFinish={ startLogin }
       >
         <Form.Item
-          name="username"
-          rules={[{type: 'email', message: "帳號格式錯誤"},{ required: true, message: "請輸入帳號" }]}
+          name="user"
+          rules={[
+            { type: "email", message: "帳號格式錯誤" },
+            { required: true, message: "請輸入帳號" },
+          ]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
@@ -30,7 +49,13 @@ const Login = () => {
         </Form.Item>
         <Form.Item
           name="password"
-          rules={[{pattern: /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/, message: "密碼格式錯誤"},{ required: true, message: "請輸入密碼" }]}
+          rules={[
+            {
+              pattern: /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/,
+              message: "密碼格式錯誤",
+            },
+            { required: true, message: "請輸入密碼" },
+          ]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}

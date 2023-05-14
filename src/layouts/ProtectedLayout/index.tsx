@@ -2,19 +2,14 @@ import { Layout, Menu, Button } from "antd";
 import { LogoutOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Outlet, Link, useLocation, Navigate } from "react-router-dom";
 const { Header, Content, Sider } = Layout;
-import { AuthContext } from "@/customHooks/useAuthContext";
+import { useAuth } from "@/customHooks/useAuthContext";
 
 import "./style.scss";
-import { useContext } from "react";
 
 const ProtectedLayout = () => {
-  const auth = useContext(AuthContext);
   const { pathname } = useLocation();
 
-  if (auth === undefined) {
-    return <Navigate to="/login" />;
-  }
-  const { user, logout } = auth
+  const { user, logout } = useAuth();
   if (user === null) {
     return <Navigate to="/login" />;
   }
