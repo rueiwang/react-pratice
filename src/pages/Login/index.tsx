@@ -10,16 +10,15 @@ interface LoginValue {
   password: string;
 }
 
-
 const Login = () => {
   const { user, login } = useAuth();
   if (user !== null) {
-    return <Navigate to="/home"  replace={true} />;
+    return <Navigate to="/home" replace={true} />;
   }
 
   const startLogin = (value: LoginValue) => {
-    if(!login) return
-    login(value.user);
+    if (!login) return;
+    login({userName: value.user, password: value.password});
     return <Navigate to="/home" />;
   };
 
@@ -33,7 +32,7 @@ const Login = () => {
         name="normal_login"
         className="login-form"
         initialValues={{ remember: true }}
-        onFinish={ startLogin }
+        onFinish={startLogin}
       >
         <Form.Item
           name="user"

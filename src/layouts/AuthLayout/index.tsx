@@ -9,16 +9,6 @@ interface AuthLayoutLoader {
   userPromise: Promise<UserName>;
 }
 
-export const getUserData = () => {
-  return new Promise<UserName>((resolve) => {
-    return setTimeout(() => {
-      const user = window.localStorage.getItem("user") || null;
-      resolve(user);
-    }, 100);
-  });
-};
-
-
 const AuthLayout = () => {
   const outlet = useOutlet();
   const { userPromise } = useLoaderData() as AuthLayoutLoader;
