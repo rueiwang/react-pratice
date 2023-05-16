@@ -23,7 +23,6 @@
       height: 100%;
       box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
         0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-  
     }
 
     &__menu {
@@ -31,14 +30,12 @@
       color: #444c80ff;
       overflow: auto;
 
-
       .anit-menu {
-        padding: 0 ;
+        padding: 0;
       }
       .ant-menu-item {
         margin-block: 0px;
         margin-bottom: 8px;
-
       }
       .ant-menu-item:not(.ant-menu-item-selected):hover,
       .ant-menu-item-selected {

@@ -39,12 +39,12 @@ function makeFakeData(): DataType[] {
       birthDateTimestamp,
       address,
       img: `https://fakeimg.pl/100x100/?text=${randomName}`,
-      changeable: false
+      changeable: false,
     });
   }
 
   return result;
 }
 
-const dataList = makeFakeData()
-export default dataList
+const dataList = makeFakeData();
+export default dataList;

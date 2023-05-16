@@ -11,7 +11,6 @@ function useLocalStorage<T>(
   keyName: string,
   defaultValue: T
 ): [T, SetValue<T>] {
-    
   // pass the function, run only the very first time when component render
   const [storedValue, setStoredValue] = useState(() => {
     try {

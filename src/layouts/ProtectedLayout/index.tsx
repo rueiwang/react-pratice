@@ -23,11 +23,12 @@ const ProtectedLayout = () => {
     <ConfigProvider
       theme={{
         token: {
-          colorBgTextHover: '#ffe600',
-          controlItemBgActive: '#ffe600',
-          colorFillAlter: '#fff57e',
-          colorPrimary: '#ffe600'
-      }}}
+          colorBgTextHover: "#ffe600",
+          controlItemBgActive: "#ffe600",
+          colorFillAlter: "#fff57e",
+          colorPrimary: "#ffe600",
+        },
+      }}
     >
       <Layout className="ProtectedLayout">
         <Header className="header">
