@@ -1,4 +1,6 @@
 import React from "react";
+import { theme } from "antd";
+const {useToken} = theme 
 
 interface TitleBarProps {
   title: string;
@@ -10,7 +12,7 @@ const TitleBar = ({ title, icon }: TitleBarProps) => (
     className="TitleBar"
     style={{
       color: "#444c80",
-      backgroundColor: "#ffe600",
+      backgroundColor: useToken().token.controlItemBgActive,
       borderRadius: "20px",
       display: "flex",
       alignItems: "center",

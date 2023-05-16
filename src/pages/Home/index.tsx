@@ -10,7 +10,6 @@ import "./style.scss";
 import Loading from "@/components/Loading";
 
 const Home = () => {
-  // const chartData = makeFakeData();
   const { chartDataPromise } = useLoaderData() as ChartDataLoader;
   return (
     <div className="Home">

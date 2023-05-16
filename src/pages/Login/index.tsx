@@ -1,7 +1,8 @@
 import { Navigate } from "react-router-dom";
 import { useAuth, UserName } from "@/customHooks/useAuthContext";
 
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, theme } from "antd";
+const {useToken} = theme
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import "./style.scss";
 
@@ -12,6 +13,7 @@ interface LoginValue {
 
 const Login = () => {
   const { user, login } = useAuth();
+  const {token} = useToken()
   if (user !== null) {
     return <Navigate to="/home" replace={true} />;
   }
@@ -25,7 +27,7 @@ const Login = () => {
   return (
     <div className="Login">
       <div className="Login__title">
-        <h1>智慧能源調度系統</h1>
+        <h1 style={{color: token.colorPrimary}}>智慧能源調度系統</h1>
         <p>版本 v2.9</p>
       </div>
       <Form
@@ -42,7 +44,7 @@ const Login = () => {
           ]}
         >
           <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
+            prefix={<UserOutlined style={{color: token.colorPrimary}} className="site-form-item-icon" />}
             placeholder="帳號"
           />
         </Form.Item>
@@ -57,7 +59,7 @@ const Login = () => {
           ]}
         >
           <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
+            prefix={<LockOutlined style={{color: token.colorPrimary}} className="site-form-item-icon" />}
             type="password"
             placeholder="密碼"
           />
