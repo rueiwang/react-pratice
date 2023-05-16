@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth, UserName } from "@/customHooks/useAuthContext";
+import { useAuth, UserName } from "@/customHooks/useAuth";
 
 import { Button, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
@@ -11,14 +11,15 @@ interface LoginValue {
 }
 
 const Login = () => {
-  const { user, login } = useAuth();
-  if (user !== null) {
+  const { login, userName } = useAuth();
+
+  if (userName !== null) {
     return <Navigate to="/home" replace={true} />;
   }
 
   const startLogin = (value: LoginValue) => {
     if (!login) return;
-    login({userName: value.user, password: value.password});
+    login({ userName: value.user, password: value.password });
     return <Navigate to="/home" />;
   };
 

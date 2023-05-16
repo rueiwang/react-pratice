@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation, Navigate } from "react-router-dom";
-import { useAuth } from "@/customHooks/useAuthContext";
+import { useAuth } from "@/customHooks/useAuth";
 
 import { Layout, Menu, Button } from "antd";
 const { Header, Content, Sider } = Layout;
@@ -9,8 +9,8 @@ import "./style.scss";
 const ProtectedLayout = () => {
   const { pathname } = useLocation();
 
-  const { user, logout } = useAuth();
-  if (user === null) {
+  const { userName, logout } = useAuth();
+  if (userName === null) {
     return <Navigate to="/login" />;
   }
 
@@ -22,12 +22,15 @@ const ProtectedLayout = () => {
     <Layout className="ProtectedLayout">
       <Header className="header">
         <h1 className="">綠電轉供資訊服務平台</h1>
-        <Button
-          type="text"
-          icon={<LogoutOutlined style={{ color: "#444c80ff" }} />}
-          onClick={logout}
-          className="logout-button"
-        ></Button>
+
+        <div>
+          <Button
+            type="text"
+            icon={<LogoutOutlined style={{ color: "#444c80ff" }} />}
+            onClick={logout}
+            className="logout-button"
+          ></Button>
+        </div>
       </Header>
       <Content className="main">
         <Layout className="main__container" style={{ padding: "24px 0" }}>

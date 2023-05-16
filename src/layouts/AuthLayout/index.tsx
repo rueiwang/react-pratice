@@ -1,34 +1,13 @@
-import { Suspense } from "react";
-import { useLoaderData, useOutlet, Await } from "react-router-dom";
-import { AuthProvider, UserName } from "@/customHooks/useAuthContext";
+import { useOutlet } from "react-router-dom";
+import { useAuth } from "@/customHooks/useAuth";
 
-import { Alert } from "antd";
 import Loading from "@/components/Loading";
-
-interface AuthLayoutLoader {
-  userPromise: Promise<UserName>;
-}
 
 const AuthLayout = () => {
   const outlet = useOutlet();
-  const { userPromise } = useLoaderData() as AuthLayoutLoader;
+  const { isInitialized } = useAuth();
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <Await
-        resolve={userPromise}
-        errorElement={
-          <Alert
-            message="Error"
-            description="Something wrong!"
-            type="error"
-            showIcon
-          />
-        }
-        children={(user) => <AuthProvider user={user}>{outlet}</AuthProvider>}
-      />
-    </Suspense>
-  );
+  return isInitialized ? <Loading /> : <>{outlet}</>;
 };
 
 export default AuthLayout;
