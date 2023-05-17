@@ -1,5 +1,6 @@
 import dataList, { DataType } from "./fakeData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useDataApi from "@/customHooks/useDataApi";
 
 import TitleBar from "@/components/Title";
 
@@ -9,41 +10,49 @@ import type { ColumnsType } from "antd/es/table";
 import "./style.scss";
 
 const Profile = () => {
-  const [tableData, setTableData] = useState(dataList);
+  const [tableData, setTableData] = useState(
+    dataList.map((item) => ({ ...item, isLoading: false }))
+  );
+  const [{ data: switchData, isError }, doSwitchFetch] = useDataApi<any>(
+    "",
+    {}
+  );
+
   async function switchHandler(name: string) {
     // 模仿 API 成功後修改對應物件狀態
-    const { data } = await fetchSwitchData();
-    if (data === null) return;
     setTableData((prevData) => {
       return prevData.map((item) => {
         if (item.name === name) {
           return {
             ...item,
-            changeable: !item.changeable,
+            isLoading: true,
           };
         } else {
           return item;
         }
       });
     });
+    doSwitchFetch(`https://hn.algolia.com/api/v1/search?query=${name}`);
   }
 
-  async function fetchSwitchData() {
-    return fetch("https://645c994de01ac610588dbab7.mockapi.io/api/switch")
-      .then((res) => res.json())
-      .then((data) => {
-        return {
-          error: null,
-          data,
-        };
-      })
-      .catch((error) => {
-        return {
-          error,
-          data: null,
-        };
+  useEffect(() => {
+    console.log(switchData);
+    if (!isError) {
+      setTableData((prevData) => {
+        return prevData.map((item) => {
+          if (item.name === switchData.query) {
+            return {
+              ...item,
+              changeable: !item.changeable,
+              isLoading: false,
+            };
+          } else {
+            return item;
+          }
+        });
       });
-  }
+    }
+  }, [switchData]);
 
   // first column: fix, filter and search, popover
   // age column: sort
@@ -161,6 +170,7 @@ const Profile = () => {
             size="small"
             checked={changeable}
             onChange={() => switchHandler(record.name)}
+            loading={record.isLoading}
           />
         );
       },

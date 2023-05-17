@@ -9,6 +9,7 @@ export interface DataType {
   address: string;
   img: string;
   changeable: boolean;
+  isLoading?: boolean;
 }
 
 function makeFakeData(): DataType[] {
