@@ -11,7 +11,7 @@ interface LoginValue {
 }
 
 const Login = () => {
-  const { login, userName } = useAuth();
+  const { login, userName, isSuccess } = useAuth();
 
   if (userName !== null) {
     return <Navigate to="/home" replace={true} />;
@@ -20,7 +20,9 @@ const Login = () => {
   const startLogin = (value: LoginValue) => {
     if (!login) return;
     login({ userName: value.user, password: value.password });
-    return <Navigate to="/home" />;
+    if (isSuccess) {
+      return <Navigate to="/home" />;
+    }
   };
 
   return (

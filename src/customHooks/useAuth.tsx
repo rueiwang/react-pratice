@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogin, userLogout } from "@/features/userSlice";
+import { userLogin, userLogout } from "@/store/services/userSlice";
 import useLocalStorage from "@/customHooks/useLocalStorage";
 
 import { now } from "lodash";
@@ -60,10 +60,10 @@ export const getUserDataWithAuthenticatedToken = async (): Promise<
     data: {
       user: null,
       accessToken: null,
-      refreshToken: null
+      refreshToken: null,
     },
   };
- 
+
   const accessToken = localStorage.getItem("accessToken");
   if (!accessToken) {
     return result;
@@ -72,9 +72,13 @@ export const getUserDataWithAuthenticatedToken = async (): Promise<
   const status = checkIsTokenExpired(accessToken);
   if (status === 200) {
     result.status = 200;
-    result.data.user = JSON.parse(localStorage.getItem("user") as string);    
-    result.data.refreshToken = JSON.parse(localStorage.getItem("refreshToken") as string)
-    result.data.accessToken = JSON.parse(localStorage.getItem("accessToken") as string)
+    result.data.user = JSON.parse(localStorage.getItem("user") as string);
+    result.data.refreshToken = JSON.parse(
+      localStorage.getItem("refreshToken") as string
+    );
+    result.data.accessToken = JSON.parse(
+      localStorage.getItem("accessToken") as string
+    );
   } else if (status === 401) {
     // accessToken 已過期需要 refresh
     console.log("expired accessToke!");
@@ -84,8 +88,10 @@ export const getUserDataWithAuthenticatedToken = async (): Promise<
 
     result.status = 200;
     result.data.user = JSON.parse(localStorage.getItem("user") as string);
-    result.data.refreshToken = JSON.parse(localStorage.getItem("refreshToken") as string)
-    result.data.accessToken = newAccessToken
+    result.data.refreshToken = JSON.parse(
+      localStorage.getItem("refreshToken") as string
+    );
+    result.data.accessToken = newAccessToken;
   }
   return new Promise((resolve) => {
     return setTimeout(() => {
@@ -97,7 +103,7 @@ export const getUserDataWithAuthenticatedToken = async (): Promise<
 const refreshAccessToken = () => {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) {
-    return null
+    return null;
   }
 
   let newAccessToken = null;
@@ -148,5 +154,13 @@ export const useAuth = () => {
   const isError = status === "failed";
   const isSuccess = status === "success";
 
-  return { login, logout, userName, isLoading, isError, isSuccess, isInitialized };
+  return {
+    login,
+    logout,
+    userName,
+    isLoading,
+    isError,
+    isSuccess,
+    isInitialized,
+  };
 };

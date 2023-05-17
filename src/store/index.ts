@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer, { initialUserState } from "@/features/userSlice";
+import userReducer, { initialUserState } from "@/store/services/userSlice";
 import { getUserDataWithAuthenticatedToken } from "@/customHooks/useAuth";
 
 export const store = configureStore({
