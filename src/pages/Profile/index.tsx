@@ -36,7 +36,6 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    console.log(switchData);
     if (!isError) {
       setTableData((prevData) => {
         return prevData.map((item) => {
@@ -51,8 +50,11 @@ const Profile = () => {
           }
         });
       });
+
+      // reset URL 因為開或關都會打一樣的，沒有重置就無法重打
+      doSwitchFetch("");
     }
-  }, [switchData]);
+  }, [switchData, isError, doSwitchFetch]);
 
   // first column: fix, filter and search, popover
   // age column: sort

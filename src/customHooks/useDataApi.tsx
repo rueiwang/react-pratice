@@ -18,22 +18,31 @@ function useDataApi<T>(
 
   useEffect(() => {
     if (!url) return;
+    let isUnmount = false;
     const fetchData = async () => {
       setIsError(false);
       setIsLoading(true);
 
       try {
         const result = await axios(url);
-        console.log(result.data);
-        setData(result.data);
-        setIsLoading(false);
+        if (!isUnmount) {
+          setData(result.data);
+        }
       } catch (error) {
-        setIsError(true);
+        if (!isUnmount) {
+          setIsError(true);
+        }
+      } finally {
+        if (!isUnmount) {
+          setIsLoading(false);
+        }
       }
     };
 
     fetchData();
-    setUrl("");
+    return () => {
+      isUnmount = true;
+    };
   }, [url]);
 
   return [{ data, isLoading, isError }, setUrl];
