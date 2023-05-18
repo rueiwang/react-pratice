@@ -1,0 +1,40 @@
+{
+  "companyName": "Beseye",
+  "languages": {
+    "en": "English",
+    "zhTw": "Zh-Tw"
+  },
+  "loginPage": {
+    "loginTitle": "AI Energy System",
+    "version": "version",
+    "account": "email",
+    "password": "password",
+    "login": "Login",
+    "warning": {
+      "required": "Required field.",
+      "email": "Invalid email.",
+      "password": "Invalid password."
+    }
+  },
+  "protectedLayout": {
+    "title": "Manage System",
+    "home": "Home",
+    "profile": "Profile"
+  },
+  "homePage": {
+    "bulletinBoard": "Bulletin Board",
+    "warn": "Warn",
+    "combination": "Combination",
+    "chart": "Chart",
+    "more": "More",
+    "noData": "No Data"
+  },
+  "profilePage": {
+    "name": "Name",
+    "age": "Age",
+    "birthDate": "Birth Date",
+    "address": "Address",
+    "changeable": "Changeable",
+    "total": "Total {{dataLength}}"
+  }
+}

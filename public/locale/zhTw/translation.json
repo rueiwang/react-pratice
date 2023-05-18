@@ -1,0 +1,40 @@
+{
+  "companyName": "雲守護",
+  "languages": {
+    "en": "英文",
+    "zhTw": "中文"
+  },
+  "loginPage": {
+    "loginTitle": "智慧能源調度系統",
+    "version": "版本",
+    "account": "帳號",
+    "password": "密碼",
+    "login": "登入",
+    "warning": {
+      "required": "不可空白",
+      "email": "帳號格式錯誤",
+      "password": "密碼格式錯誤"
+    }
+  },
+  "protectedLayout": {
+    "title": "綠電轉供資訊服務平台",
+    "home": "首頁",
+    "profile": "個人資訊"
+  },
+  "homePage": {
+    "bulletinBoard": "佈告欄",
+    "warn": "警示",
+    "combination": "契約組合",
+    "chart": "全案場轉供走勢圖",
+    "more": "更多",
+    "noData": "暫無資料"
+  },
+  "profilePage": {
+    "name": "姓名",
+    "age": "年齡",
+    "birthDate": "生日",
+    "address": "地址",
+    "changeable": "是否提供轉供",
+    "total": "共 {{dataLength}} 筆"
+  }
+}

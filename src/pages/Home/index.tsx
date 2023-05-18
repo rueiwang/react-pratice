@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { useLoaderData, Await } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChartDataLoader } from "@/pages/Home/fakeData";
 import Chart from "./Chart";
 
@@ -11,27 +12,28 @@ import Loading from "@/components/Loading";
 
 const Home = () => {
   const { chartDataPromise } = useLoaderData() as ChartDataLoader;
+  const { t } = useTranslation();
   return (
     <div className="Home">
-      <TitleBar title="首頁" icon={<HomeOutlined />} />
+      <TitleBar title={t("protectedLayout.home")} icon={<HomeOutlined />} />
       <div className="Home__content">
         <section className="announcement">
-          <div className="sectionTitle">佈告欄</div>
+          <div className="sectionTitle">{t("homePage.bulletinBoard")}</div>
           <div className="announcement__board">
             <Space size={16}>
               <Card
-                title="警示"
+                title={t("homePage.warn")}
                 headStyle={{
                   color: "#f55b5b",
                 }}
               >
-                <div>暫無資料</div>
+                <div>{t("homePage.noData")}</div>
               </Card>
               <Card
-                title="契約組合"
+                title={t("homePage.combination")}
                 extra={
                   <a href="#">
-                    更多
+                    {t("homePage.more")}
                     <DoubleRightOutlined />
                   </a>
                 }
@@ -48,7 +50,7 @@ const Home = () => {
           </div>
         </section>
         <section className="highChart">
-          <div className="sectionTitle">全案場轉供走勢圖</div>
+          <div className="sectionTitle">{t("homePage.chart")}</div>
           <Suspense fallback={<Loading />}>
             <Await
               resolve={chartDataPromise}

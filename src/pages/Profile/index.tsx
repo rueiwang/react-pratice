@@ -1,6 +1,7 @@
 import dataList, { DataType } from "./fakeData";
 import { useEffect, useState } from "react";
 import useDataApi from "@/customHooks/useDataApi";
+import { useTranslation } from "react-i18next";
 
 import TitleBar from "@/components/Title";
 
@@ -10,6 +11,7 @@ import type { ColumnsType } from "antd/es/table";
 import "./style.scss";
 
 const Profile = () => {
+  const { t } = useTranslation();
   const [tableData, setTableData] = useState(
     dataList.map((item) => ({ ...item, isLoading: false }))
   );
@@ -63,7 +65,7 @@ const Profile = () => {
   // last column: Switch and call api
   const columns: ColumnsType<DataType> = [
     {
-      title: "姓名",
+      title: t("profilePage.name"),
       dataIndex: "name",
       key: "name",
       filters: [
@@ -106,13 +108,13 @@ const Profile = () => {
       ),
     },
     {
-      title: "年齡",
+      title: t("profilePage.age"),
       dataIndex: "age",
       key: "age",
       sorter: (a, b) => a.age - b.age,
     },
     {
-      title: "生日",
+      title: t("profilePage.birthDate"),
       dataIndex: "birthDateTimestamp",
       render: (birthDateTimestamp) => {
         const formatString = new Date(birthDateTimestamp)
@@ -123,7 +125,7 @@ const Profile = () => {
       },
     },
     {
-      title: "地址",
+      title: t("profilePage.address"),
       dataIndex: "address",
       key: "address",
       ellipsis: {
@@ -131,7 +133,7 @@ const Profile = () => {
       },
     },
     {
-      title: "地址1",
+      title: `${t("profilePage.address")}1`,
       dataIndex: "address",
       key: "address",
       ellipsis: {
@@ -139,7 +141,7 @@ const Profile = () => {
       },
     },
     {
-      title: "地址2",
+      title: `${t("profilePage.address")}2`,
       dataIndex: "address",
       key: "address",
       ellipsis: {
@@ -147,7 +149,7 @@ const Profile = () => {
       },
     },
     {
-      title: "地址3",
+      title: `${t("profilePage.address")}3`,
       dataIndex: "address",
       key: "address",
       ellipsis: {
@@ -155,7 +157,7 @@ const Profile = () => {
       },
     },
     {
-      title: "地址4",
+      title: `${t("profilePage.address")}4`,
       dataIndex: "address",
       key: "address",
       ellipsis: {
@@ -163,7 +165,7 @@ const Profile = () => {
       },
     },
     {
-      title: "是否轉供",
+      title: `${t("profilePage.changeable")}`,
       dataIndex: "changeable",
       key: "changeable",
       render: (changeable, record) => {
@@ -181,7 +183,7 @@ const Profile = () => {
 
   return (
     <div className="Profile">
-      <TitleBar title="個人資訊" icon={<UserOutlined />} />
+      <TitleBar title={t("protectedLayout.profile")} icon={<UserOutlined />} />
       <div className="Profile__content">
         <Table
           columns={columns}
@@ -190,7 +192,7 @@ const Profile = () => {
           size="small"
           pagination={{
             total: tableData.length,
-            showTotal: (total) => `共 ${total} 筆`,
+            showTotal: (total) => t("profilePage.total", { dataLength: total }),
             showSizeChanger: false,
           }}
         />

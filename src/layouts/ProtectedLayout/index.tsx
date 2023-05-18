@@ -1,14 +1,16 @@
 import { Outlet, Link, useLocation, Navigate } from "react-router-dom";
 import { useAuth } from "@/customHooks/useAuthContext";
+import { useTranslation } from "react-i18next";
+import LangSelect from "@/components/LangSelect";
 
-import { Layout, Menu, Button, theme, ConfigProvider } from "antd";
-const { token } = theme;
+import { Layout, Menu, Button, ConfigProvider } from "antd";
 const { Header, Content, Sider } = Layout;
 import { LogoutOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import "./style.scss";
 
 const ProtectedLayout = () => {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
 
   const { user, logout } = useAuth();
   if (user === null) {
@@ -32,13 +34,16 @@ const ProtectedLayout = () => {
     >
       <Layout className="ProtectedLayout">
         <Header className="header">
-          <h1 className="">綠電轉供資訊服務平台</h1>
-          <Button
-            type="text"
-            icon={<LogoutOutlined style={{ color: "#444c80ff" }} />}
-            onClick={logout}
-            className="logout-button"
-          ></Button>
+          <h1 className="">{t("protectedLayout.title")}</h1>
+          <div>
+            <LangSelect />
+            <Button
+              type="text"
+              icon={<LogoutOutlined style={{ color: "#444c80ff" }} />}
+              onClick={logout}
+              className="logout-button"
+            ></Button>
+          </div>
         </Header>
         <Content className="main">
           <Layout className="main__container" style={{ padding: "24px 0" }}>
@@ -52,12 +57,18 @@ const ProtectedLayout = () => {
                   {
                     key: "/home",
                     icon: <HomeOutlined />,
-                    label: <Link to={"/home"}>首頁</Link>,
+                    label: (
+                      <Link to={"/home"}>{t("protectedLayout.home")}</Link>
+                    ),
                   },
                   {
                     key: "/profile",
                     icon: <UserOutlined />,
-                    label: <Link to={"/profile"}>個人資訊</Link>,
+                    label: (
+                      <Link to={"/profile"}>
+                        {t("protectedLayout.profile")}
+                      </Link>
+                    ),
                   },
                 ]}
               />

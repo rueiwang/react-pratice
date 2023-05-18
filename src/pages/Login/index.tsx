@@ -1,5 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth, UserName } from "@/customHooks/useAuthContext";
+import { useTranslation } from "react-i18next";
+import LangSelect from "@/components/LangSelect";
 
 import { Button, Form, Input, theme } from "antd";
 const { useToken } = theme;
@@ -14,6 +16,8 @@ interface LoginValue {
 const Login = () => {
   const { user, login } = useAuth();
   const { token } = useToken();
+  const { t } = useTranslation();
+
   if (user !== null) {
     return <Navigate to="/home" replace={true} />;
   }
@@ -26,9 +30,12 @@ const Login = () => {
 
   return (
     <div className="Login">
+      <LangSelect />
       <div className="Login__title">
-        <h1 style={{ color: token.colorPrimary }}>智慧能源調度系統</h1>
-        <p>版本 v2.9</p>
+        <h1 style={{ color: token.colorPrimary }}>
+          {t("loginPage.loginTitle")}
+        </h1>
+        <p>{t("loginPage.version")} v2.9</p>
       </div>
       <Form
         name="normal_login"
@@ -39,8 +46,8 @@ const Login = () => {
         <Form.Item
           name="user"
           rules={[
-            { type: "email", message: "帳號格式錯誤" },
-            { required: true, message: "請輸入帳號" },
+            { type: "email", message: t("loginPage.warning.email") as string },
+            { required: true, message: t(`login.warning.required`) as string },
           ]}
         >
           <Input
@@ -50,7 +57,7 @@ const Login = () => {
                 className="site-form-item-icon"
               />
             }
-            placeholder="帳號"
+            placeholder={t("loginPage.account") as string}
           />
         </Form.Item>
         <Form.Item
@@ -58,9 +65,9 @@ const Login = () => {
           rules={[
             {
               pattern: /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/,
-              message: "密碼格式錯誤",
+              message: t("loginPage.warning.password") as string,
             },
-            { required: true, message: "請輸入密碼" },
+            { required: true, message: t(`login.warning.required`) as string },
           ]}
         >
           <Input
@@ -71,7 +78,7 @@ const Login = () => {
               />
             }
             type="password"
-            placeholder="密碼"
+            placeholder={t("loginPage.password") as string}
           />
         </Form.Item>
         <Form.Item>
@@ -80,7 +87,7 @@ const Login = () => {
             htmlType="submit"
             className="login-form-button"
           >
-            登入
+            {t("loginPage.login")}
           </Button>
         </Form.Item>
       </Form>
