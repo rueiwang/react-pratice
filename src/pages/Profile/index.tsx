@@ -7,7 +7,7 @@ import TitleBar from "@/components/Title";
 
 import { UserOutlined } from "@ant-design/icons";
 import { Table, Switch, Popover } from "antd";
-import type { ColumnsType } from "antd/es/table";
+import type { ColumnsType, TableProps } from "antd/es/table";
 import "./style.scss";
 
 const Profile = () => {
@@ -15,16 +15,22 @@ const Profile = () => {
   const [tableData, setTableData] = useState(
     dataList.map((item) => ({ ...item, isLoading: false }))
   );
+
+  const [showTableDataLength, setShowTableDataLength] = useState(
+    dataList.length
+  );
   const [{ data: switchData, isError }, doSwitchFetch] = useDataApi<any>(
     "",
     {}
   );
 
-  async function switchHandler(name: string) {
-    // 模仿 API 成功後修改對應物件狀態
+  const [switchTarget, setSwitchTarget] = useState<string | null>(null);
+
+  async function switchHandler(name: string, curStatus: boolean) {
+    setSwitchTarget(name);
     setTableData((prevData) => {
       return prevData.map((item) => {
-        if (item.name === name) {
+        if (item.name === switchTarget) {
           return {
             ...item,
             isLoading: true,
@@ -34,14 +40,16 @@ const Profile = () => {
         }
       });
     });
-    doSwitchFetch(`https://hn.algolia.com/api/v1/search?query=${name}`);
+    doSwitchFetch(
+      `https://hn.algolia.com/api/v1/search?query=${name + curStatus}`
+    );
   }
 
   useEffect(() => {
-    if (!isError) {
+    if (!isError || setSwitchTarget) {
       setTableData((prevData) => {
         return prevData.map((item) => {
-          if (item.name === switchData.query) {
+          if (item.name === switchTarget) {
             return {
               ...item,
               changeable: !item.changeable,
@@ -53,10 +61,9 @@ const Profile = () => {
         });
       });
 
-      // reset URL 因為開或關都會打一樣的，沒有重置就無法重打
-      doSwitchFetch("");
+      setSwitchTarget(null);
     }
-  }, [switchData, isError, doSwitchFetch]);
+  }, [switchData, isError, switchTarget]);
 
   // first column: fix, filter and search, popover
   // age column: sort
@@ -173,7 +180,7 @@ const Profile = () => {
           <Switch
             size="small"
             checked={changeable}
-            onChange={() => switchHandler(record.name)}
+            onChange={() => switchHandler(record.name, record.changeable)}
             loading={record.isLoading}
           />
         );
@@ -185,15 +192,18 @@ const Profile = () => {
     <div className="Profile">
       <TitleBar title={t("protectedLayout.profile")} icon={<UserOutlined />} />
       <div className="Profile__content">
-        <Table
+        <Table<DataType>
           columns={columns}
           dataSource={tableData}
           scroll={{ x: "max-content" }}
           size="small"
           pagination={{
-            total: tableData.length,
+            total: showTableDataLength,
             showTotal: (total) => t("profilePage.total", { dataLength: total }),
             showSizeChanger: false,
+          }}
+          onChange={(_pagination, _filters, _sorter, { currentDataSource }) => {
+            setShowTableDataLength(currentDataSource.length);
           }}
         />
       </div>
