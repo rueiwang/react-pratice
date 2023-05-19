@@ -15,6 +15,7 @@ import Login from "@/pages/Login";
 import Home from "@/pages/Home";
 import { getChartData } from "@/pages/Home/fakeData";
 import Profile from "@/pages/Profile";
+import { getProfileData } from "@/pages/Profile/fakeData";
 
 export const getUserData = () => {
   return new Promise<UserName>((resolve) => {
@@ -40,7 +41,11 @@ const router = createBrowserRouter(
           element={<Home />}
           loader={() => defer({ chartDataPromise: getChartData() })}
         />
-        <Route path="profile" element={<Profile />} />
+        <Route
+          path="profile"
+          element={<Profile />}
+          loader={() => defer({ profileDataPromise: getProfileData() })}
+        />
       </Route>
     </Route>
   )

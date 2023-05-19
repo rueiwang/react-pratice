@@ -47,5 +47,14 @@ function makeFakeData(): DataType[] {
   return result;
 }
 
-const dataList = makeFakeData();
-export default dataList;
+export interface ProfileDataLoader {
+  profileDataPromise: Promise<DataType[]>;
+}
+
+export function getProfileData() {
+  return new Promise<DataType[]>((resolve) => {
+    return setTimeout(() => {
+      resolve(makeFakeData());
+    }, 1000);
+  });
+}
