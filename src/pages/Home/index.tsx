@@ -1,11 +1,11 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { useLoaderData, Await } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChartDataLoader } from "@/pages/Home/fakeData";
 import Chart from "./Chart";
 
 import TitleBar from "@/components/Title";
-import { Card, Space } from "antd";
+import { Card, Space, Select } from "antd";
 import { HomeOutlined, DoubleRightOutlined } from "@ant-design/icons";
 import "./style.scss";
 import Loading from "@/components/Loading";
@@ -13,6 +13,7 @@ import Loading from "@/components/Loading";
 const Home = () => {
   const { chartDataPromise } = useLoaderData() as ChartDataLoader;
   const { t } = useTranslation();
+  const [chartParam, setChartParam] = useState("2023");
   return (
     <div className="Home">
       <TitleBar title={t("protectedLayout.home")} icon={<HomeOutlined />} />
@@ -50,12 +51,36 @@ const Home = () => {
           </div>
         </section>
         <section className="highChart">
-          <div className="sectionTitle">{t("homePage.chart")}</div>
+          <div
+            className="sectionTitle"
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>{t("homePage.chart")}</div>
+            <Select
+              className="Select-lang"
+              defaultValue="en"
+              onChange={(value) => {
+                setChartParam(value);
+              }}
+              options={[
+                { label: "2023", value: "2023" },
+                { label: "2022", value: "2022" },
+              ]}
+              value={chartParam}
+            />
+          </div>
+
           <Suspense fallback={<Loading />}>
             <Await
               resolve={chartDataPromise}
               errorElement={<>Wrong</>}
-              children={(chartData) => <Chart data={chartData} />}
+              children={(chartData) => (
+                <Chart initialData={chartData} param={chartParam} />
+              )}
             ></Await>
           </Suspense>
         </section>

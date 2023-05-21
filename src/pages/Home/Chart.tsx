@@ -1,10 +1,13 @@
-import { ChartData } from "./fakeData";
+import { useEffect, useRef, useState } from "react";
+import { ChartData, getChartData } from "./fakeData";
+import Loading from "@/components/Loading";
 
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 interface ChartProp {
-  data: ChartData[];
+  initialData: ChartData[]; // 承接 route loader fetch 的資料
+  param: string | null; // parent select value change 時要 call api 的參數
 }
 
 interface AreaSeriesData {
@@ -12,20 +15,51 @@ interface AreaSeriesData {
   y: number;
 }
 
-const Chart = ({ data }: ChartProp) => {
-  const categories: number[] = [];
-  const frequency: AreaSeriesData[] = [];
-  const power: AreaSeriesData[] = [];
-  const sbspm: AreaSeriesData[] = [];
+interface DataForOptions {
+  categories: number[];
+  frequency: AreaSeriesData[];
+  power: AreaSeriesData[];
+  sbspm: AreaSeriesData[];
+}
 
-  data.forEach((item) => {
-    const x = item.timestamp;
-
-    categories.push(x);
-    frequency.push({ x, y: item.frequency });
-    power.push({ x, y: item.power });
-    sbspm.push({ x, y: item.sbspm });
+const Chart = ({ initialData, param }: ChartProp) => {
+  const [chartData, setChartData] = useState<ChartData[]>(initialData);
+  const [dataForOptions, setDataForOptions] = useState<DataForOptions>({
+    categories: [],
+    frequency: [],
+    power: [],
+    sbspm: [],
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const isInitialized = useRef(false);
+
+  useEffect(() => {
+    if (!isInitialized.current) return;
+    setIsLoading(true);
+    getChartData().then((data) => {
+      setChartData(data);
+      setIsLoading(false);
+    });
+  }, [param]);
+
+  // 監聽 chartData 變化來 set dataForOptions
+  useEffect(() => {
+    const newOptionData: DataForOptions = {
+      categories: [],
+      frequency: [],
+      power: [],
+      sbspm: [],
+    };
+    chartData.forEach((item) => {
+      const x = item.timestamp;
+      newOptionData.categories.push(x);
+      newOptionData.frequency.push({ x, y: item.frequency });
+      newOptionData.power.push({ x, y: item.power });
+      newOptionData.sbspm.push({ x, y: item.sbspm });
+    });
+
+    setDataForOptions(newOptionData);
+  }, [chartData]);
 
   const options = {
     chart: {
@@ -49,7 +83,7 @@ const Chart = ({ data }: ChartProp) => {
     // x 軸顯示內容
     xAxis: {
       type: "datetime",
-      categories: categories,
+      categories: dataForOptions.categories,
       labels: {
         style: {
           fontSize: "0.4rem",
@@ -140,7 +174,7 @@ const Chart = ({ data }: ChartProp) => {
       {
         name: "頻率",
         // yAxis: 1,
-        data: frequency,
+        data: dataForOptions.frequency,
         tooltip: {
           valueSuffix: " Hz",
         },
@@ -149,7 +183,7 @@ const Chart = ({ data }: ChartProp) => {
       },
       {
         name: "功率",
-        data: power,
+        data: dataForOptions.power,
         tooltip: {
           valueSuffix: " kW",
         },
@@ -158,7 +192,7 @@ const Chart = ({ data }: ChartProp) => {
       },
       {
         name: "SBSPM",
-        data: sbspm,
+        data: dataForOptions.sbspm,
         tooltip: {
           valueSuffix: " %",
         },
@@ -182,6 +216,17 @@ const Chart = ({ data }: ChartProp) => {
       xDateFormat: "%H:%M",
     },
   };
+
+  useEffect(() => {
+    isInitialized.current = true;
+    return () => {
+      isInitialized.current = false;
+    };
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return <HighchartsReact highcharts={Highcharts} options={options} />;
 };
