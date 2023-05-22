@@ -47,7 +47,10 @@ const Login = () => {
           name="user"
           rules={[
             { type: "email", message: t("loginPage.warning.email") as string },
-            { required: true, message: t(`login.warning.required`) as string },
+            {
+              required: true,
+              message: t(`loginPage.warning.required`) as string,
+            },
           ]}
         >
           <Input
@@ -67,7 +70,10 @@ const Login = () => {
               pattern: /^(?=.*\d)(?=.*[a-zA-Z]).{8,}$/,
               message: t("loginPage.warning.password") as string,
             },
-            { required: true, message: t(`login.warning.required`) as string },
+            {
+              required: true,
+              message: t(`loginPage.warning.required`) as string,
+            },
           ]}
         >
           <Input
