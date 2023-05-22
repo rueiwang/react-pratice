@@ -37,22 +37,25 @@ export const AuthProvider = ({
   const navigate = useNavigate();
 
   // send request to /auth with userInfo 並，預期 response 為 accessToken+refreshToken 記錄 user+accessToken+refreshToken
-  const login = useCallback(async ({ userName, password }: LoginPayload) => {
-    const {
-      data: { accessToken, refreshToken },
-    } = await getAuthToken({ userName, password });
-    setUser(userName);
-    setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
-    navigate("/home");
-  }, []);
+  const login = useCallback(
+    async ({ userName, password }: LoginPayload) => {
+      const {
+        data: { accessToken, refreshToken },
+      } = await getAuthToken({ userName, password });
+      setUser(userName);
+      setAccessToken(accessToken);
+      setRefreshToken(refreshToken);
+      navigate("/home");
+    },
+    [navigate, setUser, setAccessToken, setRefreshToken]
+  );
 
   const logout = useCallback(() => {
     setUser(null);
     setAccessToken(null);
     setRefreshToken(null);
     navigate("/login", { replace: true });
-  }, []);
+  }, [navigate, setUser, setAccessToken, setRefreshToken]);
 
   const value = useMemo(
     () => ({
